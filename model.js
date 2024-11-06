@@ -21,6 +21,11 @@ const Model = {
     this.tasks.items[newTask.id] = newTask;
   },
 
+  updateTask(id, taskData) {
+    this.tasks.items[id] = { id, ...taskData };
+    return this.tasks.items[id];
+  },
+
   getTasks(options) {
     if (!options) {
       return this.tasks.ids.map((id) => this.tasks.items[id]);
@@ -30,6 +35,10 @@ const Model = {
 
     const tasks = this.tasks.ids.map((id) => this.tasks.items[id]);
     return tasks.filter((task) => task.projectId === projectId);
+  },
+
+  getTaskById(id) {
+    return this.tasks.items[id];
   },
 
   addProject({ title, id = Date.now() }) {

@@ -74,6 +74,23 @@ body {
   margin-top: 4px;
 }
 
+.task-body {
+  margin-right: auto;
+}
+
+.task-item-actions {
+  visibility: hidden;
+}
+
+.task-item:hover .task-item-actions {
+  visibility: visible;
+}
+
+.task-item-edit-button {
+  cursor: pointer;
+  padding-inline: 8px;
+}
+
 .mainbar > .title {
   font-size: 2.5rem;
   font-weight: bold;
@@ -91,6 +108,7 @@ body {
   padding: 8px;
   border: 1px solid rgba(0, 0, 0, 0.4);
   border-radius: 4px;
+  width: 100%;
 }
 
 .add-task-form-footer {

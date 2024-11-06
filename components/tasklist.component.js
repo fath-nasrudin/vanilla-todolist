@@ -1,8 +1,9 @@
-import { addTaskComponent } from './addTask.component.js';
+import Model from '../model.js';
+import { addTaskComponent, renderEditTaskForm } from './addTask.component.js';
 
-const taskItemComponent = (taskData) => {
-  const taskItem = document.createElement('div');
-  taskItem.classList.add('task-item');
+export const renderTaskItem = (taskItemElement, taskData) => {
+  const taskItem = taskItemElement;
+  taskItem.innerHTML = '';
 
   const taskCheck = document.createElement('div');
   taskCheck.classList.add('task-check');
@@ -20,6 +21,61 @@ const taskItemComponent = (taskData) => {
   taskTitle.classList.add('task-title');
   taskTitle.textContent = taskData.title;
   taskBody.appendChild(taskTitle);
+
+  const taskActions = document.createElement('div');
+  taskActions.classList.add('task-item-actions');
+  taskItem.appendChild(taskActions);
+
+  const editButton = document.createElement('button');
+  editButton.classList.add('task-item-edit-button');
+  editButton.textContent = 'edit';
+  editButton.addEventListener('click', (e) => {
+    const taskItem = e.target.closest('.task-item');
+    const taskId = taskItem.dataset.taskid;
+    const taskData = Model.getTaskById(taskId);
+    renderEditTaskForm(taskItem, taskData);
+  });
+  taskActions.appendChild(editButton);
+
+  return taskItem;
+};
+
+const taskItemComponent = (taskData) => {
+  const taskItem = document.createElement('div');
+  taskItem.classList.add('task-item');
+  taskItem.setAttribute('data-taskid', taskData.id);
+
+  const taskCheck = document.createElement('div');
+  taskCheck.classList.add('task-check');
+  taskItem.appendChild(taskCheck);
+
+  const checkBox = document.createElement('input');
+  checkBox.setAttribute('type', 'checkbox');
+  taskCheck.appendChild(checkBox);
+
+  const taskBody = document.createElement('div');
+  taskBody.classList.add('task-body');
+  taskItem.appendChild(taskBody);
+
+  const taskTitle = document.createElement('div');
+  taskTitle.classList.add('task-title');
+  taskTitle.textContent = taskData.title;
+  taskBody.appendChild(taskTitle);
+
+  const taskActions = document.createElement('div');
+  taskActions.classList.add('task-item-actions');
+  taskItem.appendChild(taskActions);
+
+  const editButton = document.createElement('button');
+  editButton.classList.add('task-item-edit-button');
+  editButton.textContent = 'edit';
+  editButton.addEventListener('click', (e) => {
+    const taskItem = e.target.closest('.task-item');
+    const taskId = taskItem.dataset.taskid;
+    const taskData = Model.getTaskById(taskId);
+    renderEditTaskForm(taskItem, taskData);
+  });
+  taskActions.appendChild(editButton);
 
   return taskItem;
 };
