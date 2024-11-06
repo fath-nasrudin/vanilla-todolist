@@ -33,6 +33,8 @@ button {
   display: flex;
   flex-direction: column;
   gap: 32px;
+
+  padding-block: 32px;
 }
 
 /* Mainbar */
