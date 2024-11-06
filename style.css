@@ -88,6 +88,8 @@ body {
 
 .task-item-actions {
   visibility: hidden;
+  display: flex;
+  gap: 8px;
 }
 
 .task-item:hover .task-item-actions {

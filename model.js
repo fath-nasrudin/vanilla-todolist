@@ -26,6 +26,11 @@ const Model = {
     return this.tasks.items[id];
   },
 
+  deleteTask(taskId) {
+    this.tasks.ids = this.tasks.ids.filter((id) => id !== taskId);
+    delete this.tasks.items[taskId];
+  },
+
   getTasks(options) {
     if (!options) {
       return this.tasks.ids.map((id) => this.tasks.items[id]);

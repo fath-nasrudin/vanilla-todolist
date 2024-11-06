@@ -38,12 +38,21 @@ export const renderTaskItem = (taskItemElement, taskData) => {
   editButton.classList.add('task-item-edit-button');
   editButton.textContent = 'edit';
   editButton.addEventListener('click', (e) => {
-    const taskItem = e.target.closest('.task-item');
-    const taskId = taskItem.dataset.taskid;
+    const currentTaskItem = e.target.closest('.task-item');
+    const taskId = currentTaskItem.dataset.taskid;
     const taskData = Model.getTaskById(taskId);
-    renderEditTaskForm(taskItem, taskData);
+    renderEditTaskForm(currentTaskItem, taskData);
   });
-  taskActions.appendChild(editButton);
+
+  const deleteButton = document.createElement('button');
+  deleteButton.classList.add('task-item-delete-button');
+  deleteButton.textContent = 'delete';
+  deleteButton.addEventListener('click', (e) => {
+    const currentTaskItem = e.target.closest('.task-item');
+    Model.deleteTask(taskData.id);
+    currentTaskItem.remove();
+  });
+  taskActions.append(editButton, deleteButton);
 
   return taskItem;
 };
