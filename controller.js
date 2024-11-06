@@ -1,4 +1,4 @@
-import View from './view.js';
+import View, { leftbarTablistComponent } from './view.js';
 import Model from './model.js';
 import { updateTasklist } from './components/tasklist.component.js';
 
@@ -29,17 +29,35 @@ export const switchContent = (tabId) => {
   View.renderMainbar({ title: 'Others', tasks: [], project });
 };
 
+export const addProject = (projectData) => {
+  Model.addProject(projectData);
+  updateProjectTablist();
+};
+
+export const updateProjectTablist = () => {
+  const projectTablist = document.getElementById('projectTablist');
+  const projects = Model.getProjects();
+  leftbarTablistComponent({
+    parent: projectTablist,
+    clickListener: tabClickListener,
+    projects,
+  });
+};
+
 export const init = () => {
   Model.addProject({ title: 'Inbox', id: '1' });
+  Model.defaultTabs.push('1');
   Model.addProject({ title: 'Works', id: '2' });
+  Model.defaultTabs.push('2');
   Model.addProject({ title: 'Others', id: '3' });
+  Model.defaultTabs.push('3');
 
   Model.addTask({ id: '1', title: 'Cuci baju', projectId: '1' });
   Model.addTask({ id: '2', title: 'membuat todolist', projectId: '2' });
   Model.addTask({ id: '3', title: 'Cuci javascript', projectId: '1' });
 
   // get the default tabs
-  const defaultTabs = Model.getProjects();
+  const defaultTabs = Model.getDefaultTabs();
 
   const projectTabs = [];
 

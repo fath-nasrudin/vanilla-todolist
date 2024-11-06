@@ -1,3 +1,4 @@
+import { renderModalComponent } from './components/modal.js';
 import { tasklistComponent } from './components/tasklist.component.js';
 
 const switchLeftbarActiveTab = (tabId) => {
@@ -12,17 +13,27 @@ const switchLeftbarActiveTab = (tabId) => {
   });
 };
 
-const leftbarTablistComponent = ({ projects, clickListener }) => {
-  const ul = document.createElement('ul');
-  ul.classList.add('nav');
+export const leftbarTablistComponent = ({
+  parent = null,
+  projects,
+  clickListener,
+}) => {
+  let ul;
+  if (parent) {
+    ul = parent;
+  } else {
+    ul = document.createElement('ul');
+    ul.classList.add('nav');
+  }
+  ul.innerHTML = '';
 
   projects.forEach((p) => {
     const li = document.createElement('li');
     li.classList.add('nav-item');
     li.textContent = p.title;
     li.setAttribute('data-id', p.id);
-    li.addEventListener('click', () => switchLeftbarActiveTab(p.id));
 
+    li.addEventListener('click', () => switchLeftbarActiveTab(p.id));
     li.addEventListener('click', (e) => clickListener(e));
 
     ul.appendChild(li);
@@ -46,12 +57,33 @@ const View = {
 
     nav.appendChild(defaultTabsComponent);
 
+    const wrapper = document.createElement('div');
+    nav.append(wrapper);
+
+    const ProjectListHeader = document.createElement('div');
+    ProjectListHeader.classList.add('project-list-header');
+    wrapper.append(ProjectListHeader);
+
+    const projectlistTitle = document.createElement('div');
+    projectlistTitle.classList.add('project-list-header-title');
+    projectlistTitle.textContent = 'Projects';
+    ProjectListHeader.append(projectlistTitle);
+
+    const addProjectButton = document.createElement('button');
+    addProjectButton.textContent = 'Add';
+    addProjectButton.classList.add('add-project-button');
+    addProjectButton.addEventListener('click', () => {
+      renderModalComponent(root);
+    });
+    ProjectListHeader.append(addProjectButton);
+
     const lowerProjects = leftbarTablistComponent({
       projects: projectTabs,
       clickListener: tabClickListener,
     });
 
-    nav.appendChild(lowerProjects);
+    lowerProjects.id = 'projectTablist';
+    wrapper.appendChild(lowerProjects);
   },
 
   renderMainbar({ title = 'Untitled', tasks, project }) {

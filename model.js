@@ -7,6 +7,7 @@ const Model = {
     ids: [],
     items: {},
   },
+  defaultTabs: [],
 
   // tasks
   addTask({ id = Date.now(), title, description, projectId, completed }) {
@@ -46,9 +47,7 @@ const Model = {
     return this.tasks.items[id];
   },
 
-  addProject({ title, id = Date.now() }) {
-    // check that there are no same project title
-    // if positif, add it to projects
+  addProject({ title, id = Date.now().toString() }) {
     const newProject = {
       id: id,
       title,
@@ -59,7 +58,13 @@ const Model = {
   },
 
   getProjects() {
-    return this.projects.ids.map((id) => this.projects.items[id]);
+    return this.projects.ids
+      .filter((id) => !this.defaultTabs.includes(id))
+      .map((id) => this.projects.items[id]);
+  },
+
+  getDefaultTabs() {
+    return this.defaultTabs.map((id) => this.projects.items[id]);
   },
 
   getProjectById(id) {
