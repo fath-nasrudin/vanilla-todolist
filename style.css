@@ -1,0 +1,127 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+}
+
+.root {
+  display: flex;
+  align-items: stretch;
+}
+
+/* Layout */
+.leftbar {
+  flex: 0 0 250px;
+  min-height: 100%;
+}
+
+.mainbar {
+  flex: 1;
+}
+
+/* Leftbar */
+.leftbar {
+  border-right: 1px solid black;
+}
+
+/* Mainbar */
+.mainbar {
+  margin: 16px;
+}
+
+/* Nav */
+.nav {
+  display: flex;
+  flex-direction: column;
+  margin: 16px;
+}
+
+.nav-item {
+  padding: 4px 8px;
+  border-radius: 4px;
+  list-style: none;
+  cursor: pointer;
+}
+
+.nav-item:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.nav-item.active {
+  background-color: #ffefe5;
+}
+
+/* task */
+.task-list-section {
+  padding-block: 16px;
+  margin-block: 16px;
+}
+
+.task-item {
+  margin-inline: 8px;
+  padding-block: 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+  display: flex;
+  gap: 16px;
+}
+
+.task-check > input {
+  margin-top: 4px;
+}
+
+.mainbar > .title {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.task-empty {
+  margin-block: 18px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+/* Add task Component */
+
+.add-task-form {
+  margin-top: 8px;
+  padding: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  border-radius: 4px;
+}
+
+.add-task-form-footer {
+  display: flex;
+  gap: 8px;
+}
+
+.add-task-project-options {
+  margin-right: auto;
+}
+
+.add-task-save-button,
+.add-task-cancel-button {
+  padding-inline: 8px;
+}
+
+.add-task-button {
+  width: 100%;
+  cursor: pointer;
+}
+
+.add-task-title-label {
+  visibility: hidden;
+  display: block;
+  height: 0px;
+}
+
+.add-task-title-input {
+  display: block;
+  border: none;
+  outline: none;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
