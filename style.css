@@ -78,6 +78,14 @@ body {
   margin-right: auto;
 }
 
+.task-item[data-iscompleted='true'] .task-title {
+  text-decoration: line-through;
+}
+
+.task-item[data-iscompleted='false'] .task-title {
+  text-decoration: none;
+}
+
 .task-item-actions {
   visibility: hidden;
 }

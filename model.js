@@ -22,7 +22,7 @@ const Model = {
   },
 
   updateTask(id, taskData) {
-    this.tasks.items[id] = { id, ...taskData };
+    this.tasks.items[id] = { ...this.tasks.items[id], ...taskData, id };
     return this.tasks.items[id];
   },
 

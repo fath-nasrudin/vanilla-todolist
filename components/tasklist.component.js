@@ -8,10 +8,18 @@ export const renderTaskItem = (taskItemElement, taskData) => {
   const taskCheck = document.createElement('div');
   taskCheck.classList.add('task-check');
   taskItem.appendChild(taskCheck);
+  taskItem.setAttribute('data-iscompleted', !!taskData.isCompleted);
 
   const checkBox = document.createElement('input');
   checkBox.setAttribute('type', 'checkbox');
   taskCheck.appendChild(checkBox);
+  checkBox.checked = taskData.isCompleted;
+  checkBox.addEventListener('change', () => {
+    const updatedTask = Model.updateTask(taskData.id, {
+      isCompleted: checkBox.checked,
+    });
+    renderTaskItem(taskItem, updatedTask);
+  });
 
   const taskBody = document.createElement('div');
   taskBody.classList.add('task-body');
@@ -45,39 +53,7 @@ const taskItemComponent = (taskData) => {
   taskItem.classList.add('task-item');
   taskItem.setAttribute('data-taskid', taskData.id);
 
-  const taskCheck = document.createElement('div');
-  taskCheck.classList.add('task-check');
-  taskItem.appendChild(taskCheck);
-
-  const checkBox = document.createElement('input');
-  checkBox.setAttribute('type', 'checkbox');
-  taskCheck.appendChild(checkBox);
-
-  const taskBody = document.createElement('div');
-  taskBody.classList.add('task-body');
-  taskItem.appendChild(taskBody);
-
-  const taskTitle = document.createElement('div');
-  taskTitle.classList.add('task-title');
-  taskTitle.textContent = taskData.title;
-  taskBody.appendChild(taskTitle);
-
-  const taskActions = document.createElement('div');
-  taskActions.classList.add('task-item-actions');
-  taskItem.appendChild(taskActions);
-
-  const editButton = document.createElement('button');
-  editButton.classList.add('task-item-edit-button');
-  editButton.textContent = 'edit';
-  editButton.addEventListener('click', (e) => {
-    const taskItem = e.target.closest('.task-item');
-    const taskId = taskItem.dataset.taskid;
-    const taskData = Model.getTaskById(taskId);
-    renderEditTaskForm(taskItem, taskData);
-  });
-  taskActions.appendChild(editButton);
-
-  return taskItem;
+  return renderTaskItem(taskItem, taskData);
 };
 
 const populateTasklist = (parent, tasks) => {
