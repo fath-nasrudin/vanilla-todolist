@@ -5,6 +5,8 @@ import {
 import { tasklistComponent } from './components/tasklist.component.js';
 import Model from './model.js';
 
+import { renderPage } from './controller.js';
+
 const switchLeftbarActiveTab = (tabId) => {
   const navItems = document.querySelectorAll('.leftbar .nav-item');
 
@@ -39,7 +41,11 @@ const navItemActionsComponent = () => {
   deleteButton.textContent = 'delete';
   deleteButton.addEventListener('click', (e) => {
     e.stopPropagation();
-    console.log('delete clicked');
+    const tabId = e.target.closest('.nav-item').dataset.id;
+
+    console.log(tabId);
+    Model.deleteProject(tabId);
+    renderPage();
   });
 
   actions.append(editButton, deleteButton);

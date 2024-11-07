@@ -79,5 +79,21 @@ const Model = {
   getProjectById(id) {
     return this.projects.items[id];
   },
+
+  deleteProject(projectId) {
+    // delete project
+    this.projects.ids = this.projects.ids.filter((id) => id !== projectId);
+    delete this.projects.items[projectId];
+
+    // delete all tasks related to the project
+    this.tasks.ids = this.tasks.ids.filter((taskId) => {
+      const currentTaskProjectId = this.tasks.items[taskId].projectId;
+      if (projectId === this.tasks.items[taskId].projectId) {
+        delete this.tasks.items[taskId];
+      }
+      return currentTaskProjectId !== projectId;
+    });
+    console.log({ projects: this.projects, tasks: this.tasks });
+  },
 };
 export default Model;

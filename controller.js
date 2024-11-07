@@ -70,6 +70,12 @@ export const init = () => {
   Model.addTask({ id: '2', title: 'membuat todolist', projectId: '2' });
   Model.addTask({ id: '3', title: 'Cuci javascript', projectId: '1' });
 
+  renderPage();
+
+  // populate tasks button with function
+};
+
+export const renderPage = () => {
   // get the default tabs
   const defaultTabs = Model.getDefaultTabs();
 
@@ -78,6 +84,7 @@ export const init = () => {
   const defaultProject = defaultTabs[0].id;
   const project = Model.getProjectById(defaultProject);
   const tasks = Model.getTasks({ projectId: project.id });
+
   View.renderInit({
     defaultTabs,
     projectTabs,
@@ -86,8 +93,6 @@ export const init = () => {
     project,
     tabClickListener,
   });
-
-  // populate tasks button with function
 };
 // initialize
 // get the projectss
