@@ -1,4 +1,7 @@
-import View, { leftbarTablistComponent } from './view.js';
+import View, {
+  leftbarTabItemComponent,
+  leftbarTablistComponent,
+} from './view.js';
 import Model from './model.js';
 import { updateTasklist } from './components/tasklist.component.js';
 
@@ -16,7 +19,7 @@ export const addTask = (taskData) => {
 };
 
 const tabClickListener = (e) => {
-  const tabId = e.target.dataset.id;
+  const tabId = e.currentTarget.dataset.id;
   const project = Model.getProjectById(tabId);
   const tasks = Model.getTasks({ projectId: project.id });
   View.renderMainbar({ title: project.title, tasks: tasks, project });
@@ -34,13 +37,26 @@ export const addProject = (projectData) => {
   updateProjectTablist();
 };
 
+export const updateProject = (id, projectData, component) => {
+  const updatedProject = Model.updateProject(id, projectData);
+
+  // update nav item
+  leftbarTabItemComponent({
+    parent: component,
+    actions: true,
+    project: updatedProject,
+    clickListener: tabClickListener,
+  });
+};
 export const updateProjectTablist = () => {
   const projectTablist = document.getElementById('projectTablist');
   const projects = Model.getProjects();
+  // render
   leftbarTablistComponent({
     parent: projectTablist,
     clickListener: tabClickListener,
     projects,
+    actions: true,
   });
 };
 
@@ -48,9 +64,7 @@ export const init = () => {
   Model.addProject({ title: 'Inbox', id: '1' });
   Model.defaultTabs.push('1');
   Model.addProject({ title: 'Works', id: '2' });
-  Model.defaultTabs.push('2');
   Model.addProject({ title: 'Others', id: '3' });
-  Model.defaultTabs.push('3');
 
   Model.addTask({ id: '1', title: 'Cuci baju', projectId: '1' });
   Model.addTask({ id: '2', title: 'membuat todolist', projectId: '2' });
@@ -59,7 +73,7 @@ export const init = () => {
   // get the default tabs
   const defaultTabs = Model.getDefaultTabs();
 
-  const projectTabs = [];
+  const projectTabs = Model.getProjects();
 
   const defaultProject = defaultTabs[0].id;
   const project = Model.getProjectById(defaultProject);

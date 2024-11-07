@@ -1,5 +1,9 @@
-import { renderModalComponent } from './components/modal.js';
+import {
+  modalProjectComponent,
+  renderModalComponent,
+} from './components/modal.js';
 import { tasklistComponent } from './components/tasklist.component.js';
+import Model from './model.js';
 
 const switchLeftbarActiveTab = (tabId) => {
   const navItems = document.querySelectorAll('.leftbar .nav-item');
@@ -13,10 +17,68 @@ const switchLeftbarActiveTab = (tabId) => {
   });
 };
 
+const navItemActionsComponent = () => {
+  const actions = document.createElement('div');
+  actions.classList.add('nav-item-actions');
+
+  const editButton = document.createElement('button');
+  editButton.textContent = 'edit';
+  editButton.addEventListener('click', (e) => {
+    e.stopPropagation();
+    console.log('edit clicked');
+    const navItem = e.target.closest('.nav-item');
+    const id = navItem.dataset.id;
+    const project = Model.getProjectById(id);
+
+    const root = document.getElementById('root');
+
+    root.append(modalProjectComponent(project, navItem));
+  });
+
+  const deleteButton = document.createElement('button');
+  deleteButton.textContent = 'delete';
+  deleteButton.addEventListener('click', (e) => {
+    e.stopPropagation();
+    console.log('delete clicked');
+  });
+
+  actions.append(editButton, deleteButton);
+  return actions;
+};
+
+export const leftbarTabItemComponent = ({
+  parent = null,
+  clickListener,
+  actions,
+  project,
+}) => {
+  let li;
+  if (parent) {
+    li = parent;
+  } else {
+    li = document.createElement('li');
+    li.classList.add('nav-item');
+    li.setAttribute('data-id', project.id);
+  }
+  li.innerHTML = '';
+
+  const title = document.createElement('div');
+  title.textContent = project.title;
+  li.append(title);
+  if (actions) {
+    li.append(navItemActionsComponent());
+  }
+
+  li.addEventListener('click', () => switchLeftbarActiveTab(project.id));
+  li.addEventListener('click', (e) => clickListener(e));
+  return li;
+};
+
 export const leftbarTablistComponent = ({
   parent = null,
   projects,
   clickListener,
+  actions = false,
 }) => {
   let ul;
   if (parent) {
@@ -27,15 +89,8 @@ export const leftbarTablistComponent = ({
   }
   ul.innerHTML = '';
 
-  projects.forEach((p) => {
-    const li = document.createElement('li');
-    li.classList.add('nav-item');
-    li.textContent = p.title;
-    li.setAttribute('data-id', p.id);
-
-    li.addEventListener('click', () => switchLeftbarActiveTab(p.id));
-    li.addEventListener('click', (e) => clickListener(e));
-
+  projects.forEach((project) => {
+    const li = leftbarTabItemComponent({ clickListener, actions, project });
     ul.appendChild(li);
   });
 
@@ -80,6 +135,7 @@ const View = {
     const lowerProjects = leftbarTablistComponent({
       projects: projectTabs,
       clickListener: tabClickListener,
+      actions: true,
     });
 
     lowerProjects.id = 'projectTablist';

@@ -3,7 +3,7 @@ import Model from '../model.js';
 import { renderTaskItem } from './tasklist.component.js';
 
 const projectOptionsComponent = (selectedProjectId = null) => {
-  const projects = Model.getProjects();
+  const projects = Model.getAllProjects();
   const select = document.createElement('select');
   select.name = 'projectId';
 

@@ -54,6 +54,9 @@ button {
   border-radius: 4px;
   list-style: none;
   cursor: pointer;
+
+  display: flex;
+  justify-content: space-between;
 }
 
 .nav-item:hover {
@@ -62,6 +65,16 @@ button {
 
 .nav-item.active {
   background-color: #ffefe5;
+}
+
+.nav-item-actions {
+  display: flex;
+  gap: 4px;
+  visibility: hidden;
+}
+
+.nav-item:hover .nav-item-actions {
+  visibility: visible;
 }
 
 /* task */

@@ -57,10 +57,19 @@ const Model = {
     this.projects.items[newProject.id] = newProject;
   },
 
+  updateProject(id, data) {
+    this.projects.items[id] = { ...this.projects.items[id], ...data, id };
+    return this.projects.items[id];
+  },
+
   getProjects() {
     return this.projects.ids
       .filter((id) => !this.defaultTabs.includes(id))
       .map((id) => this.projects.items[id]);
+  },
+
+  getAllProjects() {
+    return this.projects.ids.map((id) => this.projects.items[id]);
   },
 
   getDefaultTabs() {
