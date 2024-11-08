@@ -206,6 +206,10 @@ button {
   width: 100%;
 }
 
+.add-task-form input {
+  width: 100%;
+}
+
 .add-task-form-footer {
   display: flex;
   gap: 8px;
