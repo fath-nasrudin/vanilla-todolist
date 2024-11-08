@@ -1,5 +1,6 @@
 import Model from '../model.js';
 import { tabClickListener } from '../controller.js';
+import { renderModalComponent } from './modal.js';
 
 const switchLeftbarActiveTab = (tabId) => {
   const navItems = document.querySelectorAll('.leftbar .nav-item');

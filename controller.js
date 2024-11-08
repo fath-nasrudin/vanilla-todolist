@@ -61,15 +61,7 @@ export const updateProjectTablist = () => {
 };
 
 export const init = () => {
-  Model.addProject({ title: 'Inbox', id: '1' });
-  Model.defaultTabs.push('1');
-  Model.addProject({ title: 'Works', id: '2' });
-  Model.addProject({ title: 'Others', id: '3' });
-
-  Model.addTask({ id: '1', title: 'Cuci baju', projectId: '1' });
-  Model.addTask({ id: '2', title: 'membuat todolist', projectId: '2' });
-  Model.addTask({ id: '3', title: 'Cuci javascript', projectId: '1' });
-
+  Model.init();
   renderPage();
 
   // populate tasks button with function
