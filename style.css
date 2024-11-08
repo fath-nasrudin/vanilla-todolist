@@ -4,12 +4,17 @@
   box-sizing: border-box;
 }
 
+html {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 body {
   min-height: 100vh;
 }
 
 button {
   font-size: 0.75rem;
+  cursor: pointer;
 }
 
 .root {
@@ -37,9 +42,55 @@ button {
   padding-block: 32px;
 }
 
+@media (max-width: 640px) {
+  .leftbar {
+    display: none;
+  }
+}
+
 /* Mainbar */
 .mainbar {
-  margin: 16px;
+  margin-inline: 16px;
+}
+
+/* Main header */
+.main-header {
+  padding-block: 16px;
+
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.brand {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: rgb(215, 76, 67);
+}
+
+/* mobile leftbar */
+.leftbar-button {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .leftbar-button {
+    display: block;
+  }
+}
+
+.leftbar-mobile {
+  background-color: #ffefe5;
+  border-right: none;
+  position: absolute;
+  left: 0;
+  min-width: 250px;
+}
+
+@media (max-width: 640px) {
+  .leftbar-mobile {
+    display: block;
+  }
 }
 
 /* Nav */
@@ -71,6 +122,12 @@ button {
   display: flex;
   gap: 4px;
   visibility: hidden;
+}
+
+@media (max-width: 640px) {
+  .nav-item-actions {
+    visibility: visible;
+  }
 }
 
 .nav-item:hover .nav-item-actions {
@@ -112,6 +169,12 @@ button {
   visibility: hidden;
   display: flex;
   gap: 8px;
+}
+
+@media (max-width: 640px) {
+  .task-item-actions {
+    visibility: visible;
+  }
 }
 
 .task-item:hover .task-item-actions {

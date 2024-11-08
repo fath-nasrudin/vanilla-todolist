@@ -18,7 +18,7 @@ export const addTask = (taskData) => {
   updateTasklist({ tasklistId: taskData.projectId, tasks });
 };
 
-const tabClickListener = (e) => {
+export const tabClickListener = (e) => {
   const tabId = e.currentTarget.dataset.id;
   const project = Model.getProjectById(tabId);
   const tasks = Model.getTasks({ projectId: project.id });

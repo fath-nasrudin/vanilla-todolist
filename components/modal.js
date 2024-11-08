@@ -105,6 +105,7 @@ export const modalProjectComponent = (
   return modal;
 };
 
-export const renderModalComponent = (parent) => {
-  parent.append(modalComponent());
+export const renderModalComponent = () => {
+  const root = document.getElementById('root');
+  root.append(modalComponent());
 };

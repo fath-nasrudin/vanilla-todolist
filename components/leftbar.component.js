@@ -1,12 +1,5 @@
-import {
-  modalProjectComponent,
-  renderModalComponent,
-} from './components/modal.js';
-import { tasklistComponent } from './components/tasklist.component.js';
-import Model from './model.js';
-
-import { renderPage } from './controller.js';
-import { renderMobileLeftbar } from './components/leftbar.component.js';
+import Model from '../model.js';
+import { tabClickListener } from '../controller.js';
 
 const switchLeftbarActiveTab = (tabId) => {
   const navItems = document.querySelectorAll('.leftbar .nav-item');
@@ -104,7 +97,11 @@ export const leftbarTablistComponent = ({
   return ul;
 };
 
-const leftbarComponent = ({ defaultTabs, projectTabs, tabClickListener }) => {
+export const leftbarComponent = ({
+  defaultTabs,
+  projectTabs,
+  tabClickListener,
+}) => {
   const nav = document.createElement('nav');
   nav.classList.add('leftbar');
 
@@ -147,89 +144,31 @@ const leftbarComponent = ({ defaultTabs, projectTabs, tabClickListener }) => {
   return nav;
 };
 
-const View = {
-  renderLeftbar({ defaultTabs, projectTabs, tabClickListener }) {
-    const root = document.getElementById('root');
+export const renderMobileLeftbar = () => {
+  const root = document.getElementById('root');
+  const modal = document.createElement('div');
+  root.append(modal);
+  modal.classList.add('modal');
 
-    const leftbar = leftbarComponent({
-      defaultTabs,
-      projectTabs,
-      tabClickListener,
-    });
+  const defaultTabs = Model.getDefaultTabs();
+  const projectTabs = Model.getProjects();
 
-    root.append(leftbar);
-  },
-
-  renderMainbar({ title = 'Untitled', tasks, project }) {
-    const root = document.getElementById('root');
-
-    // mainbar
-    let mainbar;
-    mainbar = document.querySelector('.mainbar');
-    if (mainbar) mainbar.innerHTML = '';
-    if (!mainbar) {
-      mainbar = document.createElement('div');
-      mainbar.classList.add('mainbar');
-      root.appendChild(mainbar);
-    }
-
-    mainbar.setAttribute('data-projectId', project.id);
-
-    // header
-    const header = document.createElement('header');
-    header.classList.add('main-header');
-
-    const leftbarButton = document.createElement('button');
-    leftbarButton.classList.add('leftbar-button');
-    leftbarButton.textContent = 'Show';
-    leftbarButton.addEventListener('click', () => {
-      renderMobileLeftbar();
-    });
-
-    const brand = document.createElement('div');
-    brand.classList.add('brand');
-    brand.textContent = 'VanillaTodo';
-
-    header.append(leftbarButton, brand);
-    mainbar.append(header);
-
-    // title
-    const tabTitle = document.createElement('div');
-    tabTitle.classList.add('title');
-    tabTitle.textContent = title;
-    mainbar.appendChild(tabTitle);
-
-    // task-list-container
-    const tasklistContainer = document.createElement('div');
-    tasklistContainer.classList.add('task-list-container');
-    mainbar.appendChild(tasklistContainer);
-
-    // task-list
-    const tasklist = tasklistComponent({ tasks, tasklistId: project.id });
-    tasklistContainer.appendChild(tasklist);
-  },
-
-  renderInit({
+  const leftbar = leftbarComponent({
     defaultTabs,
     projectTabs,
-    switchActiveTab,
-    contentTitle,
-    tasks,
     tabClickListener,
-    project,
-  }) {
-    const root = document.getElementById('root');
-    root.innerHTML = '';
+  });
 
-    this.renderLeftbar({
-      defaultTabs,
-      projectTabs,
-      switchActiveTab,
-      tabClickListener,
-    });
+  leftbar.classList.add('leftbar-mobile');
+  modal.append(leftbar);
 
-    this.renderMainbar({ title: contentTitle, tasks, project });
-  },
+  const modalCloseButton = document.createElement('span');
+  modalCloseButton.classList.add('modal-close-button');
+  modalCloseButton.textContent = 'x';
+  modalCloseButton.addEventListener('click', () => {
+    modal.remove();
+  });
+  leftbar.append(modalCloseButton);
+
+  return modal;
 };
-
-export default View;
