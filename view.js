@@ -199,6 +199,14 @@ const View = {
     tabTitle.textContent = title;
     mainbar.appendChild(tabTitle);
 
+    // link source code
+    const linkSourceCode = document.createElement('a');
+    linkSourceCode.classList.add('link-source-code');
+    linkSourceCode.textContent = 'Source Code';
+    linkSourceCode.href = 'https://github.com/fath-nasrudin/vanilla-todolist';
+    linkSourceCode.target = '_blank';
+    header.append(linkSourceCode);
+
     // task-list-container
     const tasklistContainer = document.createElement('div');
     tasklistContainer.classList.add('task-list-container');

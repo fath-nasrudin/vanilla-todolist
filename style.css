@@ -34,12 +34,13 @@ button {
 
 /* Leftbar */
 .leftbar {
-  border-right: 1px solid black;
+  border-right: 1px solid rgba(0, 0, 0, 0.203);
   display: flex;
   flex-direction: column;
   gap: 32px;
 
   padding-block: 32px;
+  background-color: hsl(0, 0%, 97%);
 }
 
 @media (max-width: 640px) {
@@ -60,12 +61,14 @@ button {
   display: flex;
   gap: 8px;
   align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .brand {
   font-size: 1.25rem;
   font-weight: 600;
   color: rgb(215, 76, 67);
+  margin-right: auto;
 }
 
 /* mobile leftbar */
@@ -310,4 +313,9 @@ button {
 .add-project-button {
   padding-inline: 8px;
   cursor: pointer;
+}
+
+.link-source-code {
+  color: rgb(215, 67, 67);
+  text-decoration: none;
 }
